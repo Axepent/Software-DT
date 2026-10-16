@@ -8,7 +8,7 @@ import uuid
 from pathlib import Path
 
 import paho.mqtt.client as mqtt
-from mqtt_common import Connection, FIELDS, utc_now, validate
+from mqtt_common import Connection, FIELDS, utc_now, validate, validate_status
 
 
 def main():
@@ -26,15 +26,17 @@ def main():
     conn = Connection('sub-' + uuid.uuid4().hex[:16])
     subscribed = threading.Event()
     failures = []
-    counts = {'valid': 0, 'invalid': 0, 'duplicate': 0}
+    counts = {'valid': 0, 'invalid': 0, 'duplicate': 0, 'status': 0}
     seen = set()  # Унікальність: (device_id, run_id, sample_id).
     received_path = args.log_dir / 'received.csv'
     errors_path = args.log_dir / 'errors.jsonl'
+    status_path = args.log_dir / 'status.jsonl'
     fields = ['received_at', 'topic', 'received_qos'] + sorted(FIELDS)
     # Файли доповнюються; дедуплікація діє в межах поточного процесу.
     needs_header = not received_path.exists() or received_path.stat().st_size == 0
     with received_path.open('a', newline='', encoding='utf-8-sig') as good, \
-            errors_path.open('a', encoding='utf-8') as bad:
+            errors_path.open('a', encoding='utf-8') as bad, \
+            status_path.open('a', encoding='utf-8') as statuses:
         writer = csv.DictWriter(good, fieldnames=fields)
         if needs_header:
             writer.writeheader()
@@ -44,7 +46,7 @@ def main():
             conn.on_connect(client, userdata, flags, reason_code, properties)
             if not reason_code.is_failure:
                 subscribed.clear()
-                rc, _ = client.subscribe([('dt/+/telemetry', args.qos), ('dt/+/events', args.qos)])
+                rc, _ = client.subscribe([('dt/+/telemetry', args.qos), ('dt/+/events', args.qos), ('dt/+/status', 1)])
                 if rc != mqtt.MQTT_ERR_SUCCESS:
                     failures.append(f'SUBSCRIBE: {rc}')
 
@@ -58,6 +60,17 @@ def main():
             received_at = utc_now()
             try:
                 try:
+                    if message.topic.endswith('/status'):
+                        data = validate_status(message.topic, message.payload)
+                        statuses.write(json.dumps({'received_at': received_at,
+                            'topic': message.topic, 'received_qos': message.qos,
+                            'retained': bool(message.retain), **data}, ensure_ascii=False) + '\n')
+                        statuses.flush()
+                        counts['status'] += 1
+                        print(f"STATUS | {data['device_id']} | {data['state']} | "
+                              f"{data['reason']} | retained={message.retain} | "
+                              f"run_id={data['run_id']} | received_at={received_at}", flush=True)
+                        return
                     data = validate(message.topic, message.payload)
                 except (ValueError, OverflowError, RecursionError) as exc:
                     counts['invalid'] += 1
@@ -87,7 +100,7 @@ def main():
             conn.start(args.host, args.port)
             if not subscribed.wait(10) or failures:
                 raise RuntimeError('; '.join(failures) or 'Тайм-аут SUBACK')
-            print(f'READY | dt/+/telemetry, dt/+/events | QoS={args.qos}', flush=True)
+            print(f'READY | dt/+/telemetry, dt/+/events, dt/+/status | QoS={args.qos}', flush=True)
             started = time.monotonic()
             while args.duration == 0 or time.monotonic() - started < args.duration:
                 if failures:
@@ -103,7 +116,7 @@ def main():
             bad.flush()
         if failures:
             raise RuntimeError('; '.join(failures))
-    print(f'DONE | {counts}\nДані: {received_path}\nПомилки: {errors_path}')
+    print(f'DONE | {counts}\nДані: {received_path}\nПомилки: {errors_path}\nСтатуси: {status_path}')
 
 
 if __name__ == '__main__':

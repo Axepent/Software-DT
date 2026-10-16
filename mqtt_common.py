@@ -97,11 +97,12 @@ def validate(topic, payload):
 
 class Connection:
     """Мережевий цикл працює у фоновому потоці Paho; очікуємо CONNACK."""
-    def __init__(self, client_id):
+    def __init__(self, client_id, reconnect_on_failure=True):
         self.ready = threading.Event()
         self.error = None
         self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,
-                                  client_id=client_id, protocol=mqtt.MQTTv311)
+                                  client_id=client_id, protocol=mqtt.MQTTv311,
+                                  reconnect_on_failure=reconnect_on_failure)
         self.client.on_connect = self.on_connect
         self.client.on_disconnect = self.on_disconnect
 
@@ -112,8 +113,8 @@ class Connection:
     def on_disconnect(self, client, userdata, flags, reason_code, properties):
         self.ready.clear()
 
-    def start(self, host, port):
-        self.client.connect(host, port, keepalive=30)
+    def start(self, host, port, keepalive=30):
+        self.client.connect(host, port, keepalive=keepalive)
         self.client.loop_start()
         if not self.ready.wait(10) or self.error or not self.client.is_connected():
             self.close()
@@ -122,3 +123,38 @@ class Connection:
     def close(self):
         self.client.disconnect()
         self.client.loop_stop()
+
+
+def status_payload(device_id, run_id, state, reason):
+    # Час майбутнього обриву невідомий під час реєстрації Will.
+    return json.dumps({'schema_version': 1, 'device_id': device_id,
+                       'run_id': run_id, 'state': state, 'reason': reason,
+                       'timestamp': None if reason == 'unexpected_disconnect' else utc_now()})
+
+
+def validate_status(topic, payload):
+    if len(payload) > 65536:
+        raise ValueError('Статус перевищує 64 KiB')
+    try:
+        data = json.loads(payload.decode('utf-8'), object_pairs_hook=unique_keys)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError('Очікується UTF-8 JSON статусу') from exc
+    expected = {'schema_version', 'device_id', 'run_id', 'state', 'reason', 'timestamp'}
+    if not isinstance(data, dict) or set(data) != expected:
+        raise ValueError('Некоректні поля статусу')
+    if type(data['schema_version']) is not int or data['schema_version'] != 1:
+        raise ValueError('Невідома версія статусу')
+    if not identifier(data['device_id']) or not identifier(data['run_id']):
+        raise ValueError('Некоректні ID статусу')
+    if topic != f"dt/{data['device_id']}/status":
+        raise ValueError('Статус не відповідає топіку')
+    allowed = [('online', 'connected'), ('offline', 'normal_shutdown'),
+               ('offline', 'publisher_error'), ('offline', 'unexpected_disconnect')]
+    if (data['state'], data['reason']) not in allowed:
+        raise ValueError('Некоректна пара state/reason')
+    if data['reason'] == 'unexpected_disconnect':
+        if data['timestamp'] is not None:
+            raise ValueError('Для Will timestamp має бути null; час фіксує subscriber')
+    else:
+        timestamp(data['timestamp'])
+    return data

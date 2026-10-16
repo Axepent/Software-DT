@@ -2,6 +2,7 @@ import argparse
 import csv
 import json
 import math
+import os
 import time
 import uuid
 from collections import deque
@@ -10,13 +11,16 @@ from pathlib import Path
 
 import paho.mqtt.client as mqtt
 from sensor_emulator import SensorEmulator, parse_start
-from mqtt_common import Connection, identifier, topic_for, utc_now, validate
+from mqtt_common import Connection, identifier, topic_for, utc_now, validate, status_payload
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=1883)
+    parser.add_argument('--keepalive', type=int, default=5)
+    parser.add_argument('--crash-after', type=float, default=0,
+                        help='Аварійно завершити процес через N реальних секунд; 0 = вимкнено')
     parser.add_argument('--qos', type=int, choices=(0, 1, 2), default=1)
     parser.add_argument('--duration', type=float, default=120)
     parser.add_argument('--speed', type=float, default=1)
@@ -32,8 +36,17 @@ def main():
         parser.error('speed має бути невід’ємним скінченним числом')
     if not identifier(args.device_id):
         parser.error('device-id: 1..64 латинських літер, цифр, _ або -')
+    if not 1 <= args.keepalive <= 65535:
+        parser.error('keepalive має бути від 1 до 65535 с')
+    if not math.isfinite(args.crash_after) or args.crash_after < 0:
+        parser.error('crash-after має бути скінченним невід’ємним числом')
     run_id = uuid.uuid4().hex
-    conn = Connection('pub-' + run_id[:16])
+    conn = Connection('pub-' + run_id[:16], reconnect_on_failure=False)
+    status_topic = f'dt/{args.device_id}/status'
+    conn.client.will_set(status_topic,
+                         status_payload(args.device_id, run_id, 'offline', 'unexpected_disconnect'),
+                         qos=1, retain=True)
+    shutdown_reason = 'publisher_error'
     conn.client.max_inflight_messages_set(100)
     conn.client.max_queued_messages_set(1000)
     args.log_dir.mkdir(parents=True, exist_ok=True)
@@ -47,8 +60,13 @@ def main():
             raise RuntimeError('Тайм-аут відправлення; перевірте брокер')
 
     try:
-        conn.start(args.host, args.port)
-        print(f'CONNECTED | run_id={run_id} | QoS={args.qos}', flush=True)
+        conn.start(args.host, args.port, keepalive=args.keepalive)
+        online = conn.client.publish(status_topic,
+            status_payload(args.device_id, run_id, 'online', 'connected'), qos=1, retain=True)
+        if online.rc != mqtt.MQTT_ERR_SUCCESS:
+            raise RuntimeError('Не вдалося опублікувати online')
+        delivered(online)
+        print(f'CONNECTED | PID={os.getpid()} | run_id={run_id} | QoS={args.qos}', flush=True)
         emulator = SensorEmulator(args.seed, args.device_id, args.start_time,
                                   not args.no_anomalies)
         fields = ['topic', 'qos', 'schema_version', 'run_id', 'device_id', 'sample_id',
@@ -64,6 +82,10 @@ def main():
                         remaining = started + sample.sim_time_s / args.speed - time.perf_counter()
                         if remaining > 0:
                             time.sleep(remaining)
+                    if args.crash_after and time.perf_counter() - started >= args.crash_after:
+                        print(f'CRASH | PID={os.getpid()} | at={utc_now()}', flush=True)
+                        # Навмисно без disconnect/finally: перевірка справжнього LWT брокера.
+                        os._exit(2)
                     if not conn.client.is_connected():
                         raise RuntimeError('Зв’язок із брокером втрачено; прогін перервано')
                     topic = topic_for(sample.device_id, sample.sensor_id)
@@ -89,10 +111,20 @@ def main():
             finally:
                 for info in pending:
                     delivered(info)
+        shutdown_reason = 'normal_shutdown'
         print(f'DONE | sent={count} | run_id={run_id}\nЖурнал: {path}')
         print('Зіставте журнал із received.csv. MQTT ACK не підтверджує запис subscriber.')
     finally:
-        conn.close()
+        try:
+            if conn.client.is_connected():
+                offline = conn.client.publish(status_topic,
+                    status_payload(args.device_id, run_id, 'offline', shutdown_reason),
+                    qos=1, retain=True)
+                if offline.rc != mqtt.MQTT_ERR_SUCCESS:
+                    raise RuntimeError('Не вдалося опублікувати offline')
+                delivered(offline)
+        finally:
+            conn.close()
 
 
 if __name__ == '__main__':
