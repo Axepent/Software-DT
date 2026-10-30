@@ -1,0 +1,21 @@
+CONNECTED | PID=26056 | run_id=d5fa9453cdc3419f9bb38debadffa18e | QoS=1
+PUBLISHED=174 | model_time=1.00s
+PUBLISHED=345 | model_time=2.00s
+PUBLISHED=517 | model_time=3.00s
+PUBLISHED=690 | model_time=4.00s
+PUBLISHED=866 | model_time=5.00s
+PUBLISHED=1038 | model_time=6.01s
+PUBLISHED=1210 | model_time=7.02s
+PUBLISHED=1382 | model_time=8.03s
+PUBLISHED=1553 | model_time=9.03s
+PUBLISHED=1725 | model_time=10.04s
+PUBLISHED=1897 | model_time=11.05s
+PUBLISHED=2069 | model_time=12.06s
+PUBLISHED=2241 | model_time=13.07s
+PUBLISHED=2412 | model_time=14.07s
+PUBLISHED=2583 | model_time=15.07s
+PUBLISHED=2755 | model_time=16.08s
+PUBLISHED=2927 | model_time=17.09s
+DONE | sent=3080 | run_id=d5fa9453cdc3419f9bb38debadffa18e
+Журнал: C:\Users\Andrew\Desktop\Important\5th year\1 sem\Software-DT\results\my_measurements_utf8\outage\sent_d5fa9453cdc3419f9bb38debadffa18e.csv
+Зіставте журнал із telemetry.jsonl сервісу. MQTT ACK не підтверджує запис у БД.

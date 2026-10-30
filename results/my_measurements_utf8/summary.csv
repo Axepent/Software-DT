@@ -1,0 +1,4 @@
+﻿scenario,sent,received_unique,missing,represented,superseded,late,outlier,invalid,overflow,states,notifications_unique,notifications_missing,notifications_total_including_retained,input_interval_s,input_rate_msg_s,peak_1s_msg,latency_mean_ms,latency_max_ms,clock_errors,outbox_pending
+burst,6158,6158,0,5046,945,167,0,0,0,662,662,0,663,11.997,513.28,515,134.533,217.889,0,0
+normal,20526,20526,0,20264,70,192,0,0,0,2495,2495,0,2496,119.991,171.06,210,150.005,589.773,0,0
+outage,3080,3080,0,2511,38,531,0,0,0,389,389,0,390,17.991,171.2,570,137.6,214.712,0,0

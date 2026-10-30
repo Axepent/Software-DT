@@ -1,0 +1,47 @@
+READY | persistent MQTT session | C:\Users\Andrew\Desktop\Important\5th year\1 sem\Software-DT\results\my_measurements_utf8\outage
+TEST | subscriber disconnected
+TEST | subscriber reconnecting
+{
+  "callback_overflow": 0,
+  "invalid": 0,
+  "notification_failed": 0,
+  "status": 3,
+  "states": 389,
+  "reason_connection": 3,
+  "received": 3081,
+  "unique": 3080,
+  "buffer_peak": 84,
+  "reason_periodic": 217,
+  "applied": 2549,
+  "reason_event": 2,
+  "reason_threshold": 165,
+  "reason_broker_connection": 2,
+  "duplicate": 1,
+  "late": 531,
+  "influx_enabled": true,
+  "influx_written": 3469,
+  "outbox_pending": 0,
+  "influx_error": null,
+  "elapsed_s": 22.203000000008615,
+  "buffer_remaining": 0,
+  "inbox_remaining": 0,
+  "failure": null,
+  "parameters": {
+    "host": "127.0.0.1",
+    "port": 1883,
+    "device_id": "mannequin-01",
+    "client_id": "lab3-45e99e9a608846fc",
+    "output": "C:\\Users\\Andrew\\Desktop\\Important\\5th year\\1 sem\\Software-DT\\results\\my_measurements_utf8\\outage",
+    "duration": 22.0,
+    "period_ms": 100,
+    "reorder_ms": 100,
+    "angle_threshold": 1,
+    "influx_url": "http://127.0.0.1:8086",
+    "influx_org": "dt-lab",
+    "influx_bucket": "mannequin",
+    "local_only": false,
+    "pause_at": 5.0,
+    "pause_seconds": 3.0
+  },
+  "restart_guarantee": "No process-crash exactly-once guarantee; dedup/state are in memory"
+}

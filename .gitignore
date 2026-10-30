@@ -1,0 +1,8 @@
+VALIDATION.md
+README.md
+
+__pycache__/
+.venv/
+.env
+*.sqlite3-wal
+*.sqlite3-shm
