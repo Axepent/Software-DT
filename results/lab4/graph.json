@@ -1,0 +1,137 @@
+﻿{
+  "nodes": [
+    "ua.lab4:mannequin-01",
+    "ua.lab4:controller",
+    "ua.lab4:drive-01",
+    "ua.lab4:shoulder",
+    "ua.lab4:safety",
+    "ua.lab4:power",
+    "ua.lab4:torso",
+    "ua.lab4:head",
+    "ua.lab4:knee",
+    "ua.lab4:hip",
+    "ua.lab4:elbow"
+  ],
+  "edges": [
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:shoulder"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:elbow"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:hip"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:knee"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:head"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:torso"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:drive-01"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:power"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:safety"
+    },
+    {
+      "source": "ua.lab4:mannequin-01",
+      "relation": "contains",
+      "target": "ua.lab4:controller"
+    },
+    {
+      "source": "ua.lab4:controller",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:controller",
+      "relation": "controls",
+      "target": "ua.lab4:drive-01"
+    },
+    {
+      "source": "ua.lab4:drive-01",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:drive-01",
+      "relation": "actuates",
+      "target": "ua.lab4:shoulder"
+    },
+    {
+      "source": "ua.lab4:shoulder",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:safety",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:power",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:power",
+      "relation": "powers",
+      "target": "ua.lab4:drive-01"
+    },
+    {
+      "source": "ua.lab4:power",
+      "relation": "powers",
+      "target": "ua.lab4:controller"
+    },
+    {
+      "source": "ua.lab4:torso",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:head",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:knee",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:hip",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    },
+    {
+      "source": "ua.lab4:elbow",
+      "relation": "partOf",
+      "target": "ua.lab4:mannequin-01"
+    }
+  ]
+}

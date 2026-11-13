@@ -1,0 +1,24 @@
+{
+  "thingId": "ua.lab4:power",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "power",
+    "kind": "power",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ],
+      "powers": [
+        "ua.lab4:drive-01",
+        "ua.lab4:controller"
+      ]
+    }
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "thingId": "ua.lab4:mannequin-01",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "mannequin-01",
+    "kind": "mannequin",
+    "relations": {
+      "contains": [
+        "ua.lab4:shoulder",
+        "ua.lab4:elbow",
+        "ua.lab4:hip",
+        "ua.lab4:knee",
+        "ua.lab4:head",
+        "ua.lab4:torso",
+        "ua.lab4:drive-01",
+        "ua.lab4:power",
+        "ua.lab4:safety",
+        "ua.lab4:controller"
+      ]
+    }
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

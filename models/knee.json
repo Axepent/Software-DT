@@ -1,0 +1,22 @@
+{
+  "thingId": "ua.lab4:knee",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "knee",
+    "kind": "joint",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    },
+    "sensorId": "S-04",
+    "unit": "deg"
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

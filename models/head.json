@@ -1,0 +1,22 @@
+{
+  "thingId": "ua.lab4:head",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "head",
+    "kind": "joint",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    },
+    "sensorId": "S-05",
+    "unit": "deg"
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

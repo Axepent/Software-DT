@@ -1,0 +1,22 @@
+{
+  "thingId": "ua.lab4:elbow",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "elbow",
+    "kind": "joint",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    },
+    "sensorId": "S-02",
+    "unit": "deg"
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

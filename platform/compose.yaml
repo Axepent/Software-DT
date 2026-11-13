@@ -1,0 +1,194 @@
+services:
+  mongodb:
+    image: docker.io/mongo:7.0
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - mongodb
+    command: mongod --storageEngine wiredTiger --noscripting
+    user: mongodb
+    environment:
+      TZ: Europe/Berlin
+    logging:
+      options:
+        max-size: 50m
+    volumes:
+    - ditto-mongo:/data/db
+  policies:
+    image: docker.io/eclipse/ditto-policies:3.9.7
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - ditto-cluster
+    environment:
+    - TZ=Europe/Berlin
+    - BIND_HOSTNAME=0.0.0.0
+    - JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport
+      -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150
+      -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s
+      -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s
+      -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=
+    - MONGO_DB_HOSTNAME=mongodb
+    healthcheck:
+      test: curl --fail `hostname`:7626/alive || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 4
+      start_period: 120s
+    logging:
+      options:
+        max-size: 50m
+  things:
+    image: docker.io/eclipse/ditto-things:3.9.7
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - ditto-cluster
+    depends_on:
+    - policies
+    environment:
+    - TZ=Europe/Berlin
+    - BIND_HOSTNAME=0.0.0.0
+    - JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport
+      -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150
+      -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s
+      -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s
+      -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=
+    - MONGO_DB_HOSTNAME=mongodb
+    healthcheck:
+      test: curl --fail `hostname`:7626/alive || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 4
+      start_period: 120s
+    logging:
+      options:
+        max-size: 50m
+  things-search:
+    image: docker.io/eclipse/ditto-things-search:3.9.7
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - ditto-cluster
+    depends_on:
+    - policies
+    environment:
+    - TZ=Europe/Berlin
+    - BIND_HOSTNAME=0.0.0.0
+    - JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport
+      -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150
+      -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s
+      -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s
+      -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=
+    - MONGO_DB_HOSTNAME=mongodb
+    healthcheck:
+      test: curl --fail `hostname`:7626/alive || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 4
+      start_period: 120s
+    logging:
+      options:
+        max-size: 50m
+  connectivity:
+    image: docker.io/eclipse/ditto-connectivity:3.9.7
+    deploy:
+      resources:
+        limits:
+          memory: 768m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - ditto-cluster
+    depends_on:
+    - policies
+    environment:
+    - TZ=Europe/Berlin
+    - BIND_HOSTNAME=0.0.0.0
+    - JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport
+      -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150
+      -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s
+      -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s
+      -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=
+    - MONGO_DB_HOSTNAME=mongodb
+    healthcheck:
+      test: curl --fail `hostname`:7626/alive || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 4
+      start_period: 120s
+    logging:
+      options:
+        max-size: 50m
+  gateway:
+    image: docker.io/eclipse/ditto-gateway:3.9.7
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    restart: always
+    networks:
+      default:
+        aliases:
+        - ditto-cluster
+    depends_on:
+    - policies
+    environment:
+    - TZ=Europe/Berlin
+    - BIND_HOSTNAME=0.0.0.0
+    - ENABLE_PRE_AUTHENTICATION=true
+    - JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport
+      -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150
+      -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s
+      -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s
+      -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=
+    healthcheck:
+      test: curl --fail `hostname`:7626/alive || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 4
+      start_period: 120s
+    logging:
+      options:
+        max-size: 50m
+  nginx:
+    image: docker.io/nginx:1.27-alpine
+    deploy:
+      resources:
+        limits:
+          memory: 32m
+    restart: always
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./nginx.htpasswd:/etc/nginx/nginx.htpasswd:ro
+    depends_on:
+    - gateway
+    logging:
+      options:
+        max-size: 10m
+    ports:
+    - 127.0.0.1:18080:80
+volumes:
+  ditto-mongo: {}
+name: mannequin-lab4-ditto

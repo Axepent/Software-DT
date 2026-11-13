@@ -1,0 +1,22 @@
+{
+  "thingId": "ua.lab4:hip",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "hip",
+    "kind": "joint",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    },
+    "sensorId": "S-03",
+    "unit": "deg"
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

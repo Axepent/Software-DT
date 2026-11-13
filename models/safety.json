@@ -1,0 +1,20 @@
+{
+  "thingId": "ua.lab4:safety",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "safety",
+    "kind": "safety",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    }
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

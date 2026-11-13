@@ -1,0 +1,220 @@
+﻿{
+  "items": [
+    {
+      "thingId": "ua.lab4:elbow",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "elbow",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-02",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": 20.0237,
+            "sensor_quality": {
+              "S-02": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928267Z",
+                "age_s": 178.073904
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    },
+    {
+      "thingId": "ua.lab4:head",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "head",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-05",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": -0.0053,
+            "sensor_quality": {
+              "S-05": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928267Z",
+                "age_s": 178.073904
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    },
+    {
+      "thingId": "ua.lab4:hip",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "hip",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-03",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": -0.0363,
+            "sensor_quality": {
+              "S-03": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928267Z",
+                "age_s": 178.073904
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    },
+    {
+      "thingId": "ua.lab4:knee",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "knee",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-04",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": 9.9783,
+            "sensor_quality": {
+              "S-04": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928267Z",
+                "age_s": 178.073904
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    },
+    {
+      "thingId": "ua.lab4:shoulder",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "shoulder",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-01",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": 0.0417,
+            "sensor_quality": {
+              "S-01": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928267Z",
+                "age_s": 178.073904
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    },
+    {
+      "thingId": "ua.lab4:torso",
+      "policyId": "ua.lab4:lab4",
+      "attributes": {
+        "name": "torso",
+        "kind": "joint",
+        "relations": {
+          "partOf": [
+            "ua.lab4:mannequin-01"
+          ]
+        },
+        "sensorId": "S-06",
+        "unit": "deg"
+      },
+      "features": {
+        "state": {
+          "properties": {
+            "run_id": "610fb399bf7a46f693fbf4884296253e",
+            "version": 4240,
+            "updated_at": "2026-11-13T12:48:51.002171Z",
+            "event_time": "2026-11-13T12:48:50.900000Z",
+            "connection_status": "offline",
+            "broker_connected": true,
+            "angle": -0.0117,
+            "sensor_quality": {
+              "S-06": {
+                "status": "stale",
+                "measured_at": "2026-11-13T12:45:52.928774Z",
+                "age_s": 178.073397
+              }
+            },
+            "initialized": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "entries": {
+    "OWNER": {
+      "subjects": {
+        "nginx:ditto": {
+          "type": "local lab operator"
+        }
+      },
+      "resources": {
+        "thing:/": {
+          "grant": [
+            "READ",
+            "WRITE"
+          ],
+          "revoke": []
+        },
+        "policy:/": {
+          "grant": [
+            "READ",
+            "WRITE"
+          ],
+          "revoke": []
+        },
+        "message:/": {
+          "grant": [
+            "READ",
+            "WRITE"
+          ],
+          "revoke": []
+        }
+      }
+    }
+  }
+}

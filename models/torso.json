@@ -1,0 +1,22 @@
+{
+  "thingId": "ua.lab4:torso",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "torso",
+    "kind": "joint",
+    "relations": {
+      "partOf": [
+        "ua.lab4:mannequin-01"
+      ]
+    },
+    "sensorId": "S-06",
+    "unit": "deg"
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "initialized": false
+      }
+    }
+  }
+}

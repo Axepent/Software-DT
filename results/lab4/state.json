@@ -1,0 +1,112 @@
+﻿{
+  "thingId": "ua.lab4:mannequin-01",
+  "policyId": "ua.lab4:lab4",
+  "attributes": {
+    "name": "mannequin-01",
+    "kind": "mannequin",
+    "relations": {
+      "contains": [
+        "ua.lab4:shoulder",
+        "ua.lab4:elbow",
+        "ua.lab4:hip",
+        "ua.lab4:knee",
+        "ua.lab4:head",
+        "ua.lab4:torso",
+        "ua.lab4:drive-01",
+        "ua.lab4:power",
+        "ua.lab4:safety",
+        "ua.lab4:controller"
+      ]
+    }
+  },
+  "features": {
+    "state": {
+      "properties": {
+        "device_id": "mannequin-01",
+        "run_id": "610fb399bf7a46f693fbf4884296253e",
+        "version": 4240,
+        "updated_at": "2026-11-13T12:48:51.002171Z",
+        "event_time": "2026-11-13T12:48:50.900000Z",
+        "reason": "periodic",
+        "connection_status": "offline",
+        "broker_connected": true,
+        "joint_angles": {
+          "S-01": 0.0417,
+          "S-02": 20.0237,
+          "S-03": -0.0363,
+          "S-04": 9.9783,
+          "S-05": -0.0053,
+          "S-06": -0.0117
+        },
+        "drive_current": 0.3856,
+        "drive_temperature": 69.8101,
+        "supply_voltage": 11.9337,
+        "limit_switch": false,
+        "emergency_input": false,
+        "current_mean_100ms": null,
+        "current_max_100ms": null,
+        "current_mean_1s": null,
+        "current_max_1s": null,
+        "alerts": [],
+        "sensor_quality": {
+          "S-01": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928267Z",
+            "age_s": 178.073904
+          },
+          "S-02": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928267Z",
+            "age_s": 178.073904
+          },
+          "S-03": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928267Z",
+            "age_s": 178.073904
+          },
+          "S-04": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928267Z",
+            "age_s": 178.073904
+          },
+          "S-05": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928267Z",
+            "age_s": 178.073904
+          },
+          "S-06": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928774Z",
+            "age_s": 178.073397
+          },
+          "S-07": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:53.018105Z",
+            "age_s": 177.984066
+          },
+          "S-08": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.028755Z",
+            "age_s": 178.973416
+          },
+          "S-09": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:52.928774Z",
+            "age_s": 178.073397
+          },
+          "S-10": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:44:40.029760Z",
+            "age_s": 250.972411
+          },
+          "S-11": {
+            "status": "stale",
+            "measured_at": "2026-11-13T12:45:12.029259Z",
+            "age_s": 218.972912
+          }
+        },
+        "initialized": true
+      }
+    }
+  }
+}
