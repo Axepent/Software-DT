@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Цифровий двійник манекена</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="icon" href="data:,">
+  <script type="importmap">
+    {"imports":{"three":"/vendor/three/build/three.module.js","three/addons/":"/vendor/three/examples/jsm/"}}
+  </script>
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Цифровий двійник манекена</h1>
+      <p id="device">mannequin-01</p>
+    </div>
+    <button id="sound" type="button" aria-pressed="false">Увімкнути звук</button>
+  </header>
+  <main class="dashboard">
+    <section class="card scene">
+      <div class="section-head">
+        <h2>3D-сцена</h2>
+        <button id="reset" type="button">Загальний вигляд</button>
+      </div>
+      <div id="viewport" aria-label="Інтерактивна модель роботизованого манекена">
+        <p id="scene-message" role="status">Завантаження моделі…</p>
+        <div id="selection" class="selection" hidden>
+          <button id="close-selection" type="button" aria-label="Закрити панель">×</button>
+          <h3 id="selection-title"></h3>
+          <p id="selection-value"></p>
+          <p id="selection-quality"></p>
+        </div>
+      </div>
+      <div class="scene-footer">
+        <p>Перетягніть для обертання · Колесо для масштабу · Натисніть на шарнір для фокуса</p>
+        <div class="legend" aria-label="Позначення станів">
+          <span data-level="normal">Норма</span><span data-level="warning">Попередження</span>
+          <span data-level="emergency">Аварія</span><span data-level="unknown">Немає даних</span>
+        </div>
+      </div>
+    </section>
+    <aside class="side" aria-label="Інформаційна панель">
+      <section class="card safety">
+        <div class="section-head">
+          <h2>Стан об’єкта</h2>
+          <span id="severity" data-level="unknown" role="status">Очікування</span>
+        </div>
+        <p id="source">Підключення до WebSocket…</p>
+        <ul id="alerts" aria-label="Активні сповіщення"></ul>
+        <div id="readings"></div>
+        <p id="switches"></p>
+      </section>
+      <section class="card joints">
+        <div class="section-head"><h2>Шарніри</h2></div>
+        <div id="joints"></div>
+      </section>
+      <section class="card history">
+        <div class="section-head"><h2>Історія InfluxDB</h2></div>
+        <div class="filters">
+          <label>Показник <select id="sensor"></select></label>
+          <label>Період <select id="period">
+            <option value="5m">5 хвилин</option><option value="15m">15 хвилин</option>
+            <option value="1h">1 година</option><option value="24h">24 години</option>
+          </select></label>
+        </div>
+        <canvas id="history-chart" role="img" aria-label="Графік показника за вибраний період"></canvas>
+        <p id="history-status" role="status"></p>
+      </section>
+      <section class="card benchmark" id="benchmark" hidden>
+        <div class="section-head"><h2>Вимірювання продуктивності</h2></div>
+        <p id="benchmark-status"></p>
+        <button id="benchmark-start" type="button">Почати замір</button>
+      </section>
+    </aside>
+  </main>
+</body>
+</html>

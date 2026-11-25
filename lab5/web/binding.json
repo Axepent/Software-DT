@@ -1,0 +1,44 @@
+[
+  {
+    "sensor": "S-01",
+    "node": "shoulder.L",
+    "title": "Плече",
+    "axis": "x",
+    "direction": -1
+  },
+  {
+    "sensor": "S-02",
+    "node": "elbow.L",
+    "title": "Лікоть",
+    "axis": "x",
+    "direction": -1
+  },
+  {
+    "sensor": "S-03",
+    "node": "hip.L",
+    "title": "Стегно",
+    "axis": "x",
+    "direction": -1
+  },
+  {
+    "sensor": "S-04",
+    "node": "knee.L",
+    "title": "Коліно",
+    "axis": "x",
+    "direction": 1
+  },
+  {
+    "sensor": "S-05",
+    "node": "head",
+    "title": "Поворот голови",
+    "axis": "y",
+    "direction": 1
+  },
+  {
+    "sensor": "S-06",
+    "node": "torso",
+    "title": "Нахил тулуба",
+    "axis": "x",
+    "direction": 1
+  }
+]

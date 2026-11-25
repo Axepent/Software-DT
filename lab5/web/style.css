@@ -1,0 +1,77 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #0c111a;
+  color: #eaf1fa;
+  --border: #2a3748;
+  --dim: #a2b2c8;
+  --normal: #64d6b2;
+  --warning: #ffd071;
+  --emergency: #ff7d88;
+  --unknown: #a2b2c8;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0 auto; max-width: 1700px; padding: 25px clamp(14px, 3vw, 42px); }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; }
+h2 { font-size: 1rem; font-weight: 650; }
+h3 { font-size: .95rem; }
+p { color: var(--dim); }
+button, select {
+  font: inherit; color: inherit; background: #1a2637; border: 1px solid var(--border);
+  border-radius: 7px; padding: 7px 10px; font-size: .79rem;
+}
+button { cursor: pointer; }
+button:hover, select:hover { border-color: #7292b4; }
+button:focus-visible, select:focus-visible { outline: 2px solid #97c3ff; outline-offset: 2px; }
+button[aria-pressed="true"], .joint[aria-pressed="true"] { border-color: #97c3ff; color: #b9d9ff; }
+.top, .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.top { margin-bottom: 19px; }
+.top p { margin-top: 4px; font: .8rem ui-monospace, monospace; }
+.dashboard { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(325px, 1fr); gap: 14px; align-items: start; }
+.card { border: 1px solid var(--border); background: #131c29; border-radius: 13px; overflow: hidden; }
+.card .section-head { padding: 13px 15px; }
+.side { display: grid; gap: 12px; min-width: 0; }
+#viewport { height: min(72vh, 760px); min-height: 380px; position: relative; background: #171f2c; }
+#viewport > canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+#scene-message, .selection { position: absolute; top: 14px; left: 14px; z-index: 1; }
+.selection {
+  max-width: calc(100% - 28px); min-width: 150px; background: #101a28ef;
+  border: 1px solid #526987; border-radius: 9px; padding: 11px 37px 11px 13px;
+}
+#close-selection { position: absolute; top: 5px; right: 5px; padding: 1px 7px; font-size: 1rem; }
+#selection-value { margin: 4px 0; color: #d4e7ff; font-size: 1.2rem; }
+#selection-quality { font-size: .75rem; }
+.scene-footer { padding: 12px 15px; display: flex; flex-wrap: wrap; gap: 9px 15px; font-size: .73rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 5px 12px; }
+[data-level="normal"] { --level: var(--normal); }
+[data-level="warning"] { --level: var(--warning); }
+[data-level="emergency"] { --level: var(--emergency); }
+[data-level="unknown"] { --level: var(--unknown); }
+.legend span, #severity { color: var(--level); }
+.legend span::before, #severity::before {
+  display: inline-block; width: 7px; height: 7px; margin-right: 6px;
+  border-radius: 50%; background: var(--level); content: "";
+}
+#severity { font-size: .78rem; font-weight: 650; }
+.safety > p, #alerts, #history-status, #benchmark-status { margin: 0 15px 10px; font-size: .77rem; }
+#alerts { color: #ffd6ae; padding-left: 17px; }
+#alerts:empty { display: none; }
+#readings, #joints, .filters { display: grid; gap: 6px; margin: 0 15px 10px; }
+#readings { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.metric, .joint { padding: 7px 8px; border: 1px solid var(--border); background: #101824; border-radius: 7px; min-width: 0; }
+.metric span, .joint span { color: var(--dim); display: block; font-size: .73rem; }
+.metric strong, .joint strong { display: block; margin-top: 3px; font-size: .94rem; font-variant-numeric: tabular-nums; }
+.metric small, .joint small { display: block; color: var(--dim); font-size: .65rem; min-height: 1.05em; }
+#joints { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.joint { text-align: left; }
+.filters { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+.filters label { display: grid; gap: 4px; font-size: .72rem; color: var(--dim); }
+.filters select { width: 100%; }
+#history-chart { display: block; width: calc(100% - 30px); height: 144px; margin: 0 15px 6px; }
+#benchmark-start { margin: 0 15px 12px; }
+@media (max-width: 790px) {
+  .dashboard { grid-template-columns: minmax(0, 1fr); }
+  #viewport { height: 58vh; min-height: 310px; }
+}
